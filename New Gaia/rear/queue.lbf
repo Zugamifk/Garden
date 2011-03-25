@@ -1,0 +1,12 @@
+[Breakpoint1]
+Line=19
+Status=1
+Condition=
+[Breakpoint2]
+Line=24
+Status=1
+Condition=
+[Breakpoint3]
+Line=63
+Status=1
+Condition=
