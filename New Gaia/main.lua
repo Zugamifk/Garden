@@ -21,8 +21,8 @@ end
 
 
 function love.draw()
+    Queue:push(1100001)
 	Queue:operate()
-	
     love.graphics.print(Message, x, y)
 	Draw:cursor()
     
@@ -32,4 +32,5 @@ function love.keypressed(key)
 	if key == "a" then Queue:push(1980000) end
 	if key == "s" then Queue:push(3980001) end
 	if key == "q" then Queue:push(0990000) end
+	if key == "d" then Queue:push(1210000) end
 end

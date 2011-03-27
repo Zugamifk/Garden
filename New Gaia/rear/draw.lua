@@ -14,5 +14,5 @@ function Draw:dump()
 end
 
 function Draw:cursor()
-	love.graphics.draw(Images.cursor.default, Mouse.x, Mouse.y)
+	love.graphics.draw(Images.cursor.default, love.mouse.getPosition())
 end

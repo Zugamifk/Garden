@@ -40,9 +40,15 @@ function Queue:doTask(job)
 			self:push(0000020)
 		-- Load main game files
 		elseif jobUnique == 0001 then
+		    love.filesystem.load('rear/errors.lua')()
+		    love.filesystem.load('rear/OOP.lua')()
+		    love.filesystem.load('interface/canvas.lua')()
 			love.filesystem.load('rear/draw.lua')()
 			love.filesystem.load('rear/mouse.lua')()
-		
+			love.filesystem.load('interface/interface.lua')()
+		    love.filesystem.load('interface/windows/window.lua')()
+		    love.filesystem.load('interface/windows/windowData.lua')()
+		    
 		-- Load image files
 		elseif jobUnique == 0002 then
 			love.filesystem.load('rear/Images.lua')()
@@ -54,7 +60,7 @@ function Queue:doTask(job)
 			
 			-- Set default colours                                          t
 			love.graphics.setColor(0,0,0,255)
-   			love.graphics.setBackgroundColor(255,255,255) 
+   			love.graphics.setBackgroundColor(C:colours("ow"))
 				
 		-- Begin maintenance procedures
 		elseif jobUnique == 0020 then
@@ -68,12 +74,21 @@ function Queue:doTask(job)
 	elseif jobSet == 10 then
 		if jobUnique == 0000 then
 			love.graphics.print(Message, 100, 100)	
-		end		
+		elseif jobUnique == 0001 then
+			Window:draw()
+		end
 	--Retrieving information
 	elseif jobSet == 20 then
 		if jobUnique == 0000 then
-			Mouse.x, Mouse.y = love.mouse.getPosition()	
-		end	
+			Mouse.x, Mouse.y = love.mouse.getPosition()
+		end
+    	-- Interacting with the game
+	elseif jobSet == 21 then
+	
+	    if jobUnique == 0000 then
+			Window:toggle("debug")
+	    end
+	
 	elseif jobSet == 98 then
 	
 		if jobUnique == 0000 then
@@ -86,8 +101,8 @@ function Queue:doTask(job)
 			
 		end
 	
-	elseif jobSet == 99 then
 	
+	elseif jobSet == 99 then
 		-- Quits the game
 		if jobUnique == 0000 then
 		   	love.event.push('q')
