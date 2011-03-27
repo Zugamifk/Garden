@@ -41,7 +41,6 @@ Queue = {
 }
 
 
---[[ To do: Change loops in prority check so it is a while loop that checks there are things in the queue instead of looping for it frequency regardless--]]
 
 -- When this is called, the queue is emptied
 function Queue:operate()
