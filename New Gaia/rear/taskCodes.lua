@@ -73,7 +73,9 @@ function Queue:doTask(job)
 	-- Drawing
 	elseif jobSet == 10 then
 		if jobUnique == 0000 then
-			love.graphics.print(Message, 100, 100)	
+			love.graphics.print(Message, 100, 100)
+
+		--[[ DRAWING THE HUD AND MENUS --]]
 		elseif jobUnique == 0001 then
 			Window:draw()
 		end

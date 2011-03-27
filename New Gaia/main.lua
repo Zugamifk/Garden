@@ -6,6 +6,9 @@ function love.load()
 	Queue:push(1980000)
 	Queue:push(1980001)
 	
+	Window:toggle("happy")
+	Window:toggle("mainMenu")
+	
 	x = 400
 	y = 300
 end
@@ -23,6 +26,9 @@ end
 function love.draw()
     Queue:push(1100001)
 	Queue:operate()
+	
+	love.graphics.setFont(12)
+	
     love.graphics.print(Message, x, y)
 	Draw:cursor()
     
