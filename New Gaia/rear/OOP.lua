@@ -40,8 +40,6 @@ function oo:newPrototype(copyTable, customValues)
 	end
  	
  	setmetatable(newTable, copyTable)
- 	
- 	copyTable.__index = copyTable
 	
 	return newTable
 end

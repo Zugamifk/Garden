@@ -26,6 +26,9 @@ Queue = {
 	-- Hold any important values for the table
 	values = {
 		
+		-- Holds how many items are in the queue at a given time
+		size = 0,
+		
 		-- The limit of how many tasks can be performed before operate() breaks 	
 		taskLimit = 32,
 		
@@ -65,6 +68,8 @@ function Queue:operate()
 			
 			count = count + 1
 			
+			self.values.size = self.values.size - 1
+			
 		end
 
 		-- Run basic tasks
@@ -81,6 +86,8 @@ function Queue:operate()
 				table.remove(self.queues.tasks, 1)
 				
 				count = count + 1
+				
+				self.values.size = self.values.size - 1
 			end
 			
 		end
@@ -98,6 +105,7 @@ function Queue:operate()
 				table.remove(self.queues.buffer, 1)
 				
 				count = count + 1
+				self.values.size = self.values.size - 1
 			end
 			
 		end
@@ -114,6 +122,7 @@ function Queue:operate()
 				table.remove(self.queues.period, 1)
 				
 				count = count + 1
+				self.values.size = self.values.size - 1
 			end
 		end
 		
@@ -132,6 +141,7 @@ function Queue:operate()
 				table.remove(self.queues.maintenance, 1)
 				
 				count = count + 1
+				self.values.size = self.values.size - 1
 			end
 		end
 				
@@ -178,7 +188,10 @@ function Queue:push(job, args)
 	end
 
 	-- Put the job in its queue
-	table.insert(self.queues[q], {job, args})
+	table.insert(self.queues[q], {job, unpack(args or {})})
+	
+	-- Increase Queue size
+	self.values.size = self.values.size + 1
 	
 end
 

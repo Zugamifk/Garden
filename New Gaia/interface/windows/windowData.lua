@@ -12,7 +12,7 @@ Window.data = {
 	    y = 0,
 	    
 	    drawType = "colour",
-		BGcolour = C:colours("b"),
+		BGcolour = C:colours("w"),
 		Ecolour = C:colours("tp"),
 		Tcolour = C:colours("gray"),
 		
@@ -35,7 +35,10 @@ Window.data = {
 		BGcolour = C:colours("ow"),
 		Ecolour = C:colours("b"),
 		Tcolour = C:colours("b"),
-		text = error.log
+		text = {
+			{error.log, 5, 20, 15, 20},
+			{Queue.values.size, 5, 380, 20}
+		}
 
 	}
 }
