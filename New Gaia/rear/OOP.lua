@@ -39,7 +39,7 @@ function oo:newPrototype(copyTable, customValues)
 	 	end
 	end
  	
- 	setmetatable(newTable, copyTable)
+ 	setmetatable(newTable, {__index = copyTable})
 	
 	return newTable
 end

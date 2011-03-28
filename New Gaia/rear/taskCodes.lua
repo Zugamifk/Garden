@@ -48,6 +48,8 @@ function Queue:doTask(job)
 			love.filesystem.load('interface/interface.lua')()
 		    love.filesystem.load('interface/windows/window.lua')()
 		    love.filesystem.load('interface/windows/windowData.lua')()
+		    love.filesystem.load('interface/buttons.lua')()
+            love.filesystem.load('interface/buttonData.lua')()
 
 		-- Load image files
 		elseif jobUnique == 0002 then
@@ -82,7 +84,7 @@ function Queue:doTask(job)
 	--Retrieving information
 	elseif jobSet == 20 then
 		if jobUnique == 0000 then
-			Mouse.x, Mouse.y = love.mouse.getPosition()
+
 		end
     	-- Interacting with the game
 	elseif jobSet == 21 then

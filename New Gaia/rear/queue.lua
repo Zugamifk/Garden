@@ -66,9 +66,7 @@ function Queue:operate()
 			-- Remove it from the queue
 			table.remove(self.queues.priority, 1)
 			
-			count = count + 1
-			
-			self.values.size = self.values.size - 1
+			count = count + 10
 			
 		end
 
@@ -87,7 +85,7 @@ function Queue:operate()
 				
 				count = count + 1
 				
-				self.values.size = self.values.size - 1
+
 			end
 			
 		end
@@ -105,7 +103,6 @@ function Queue:operate()
 				table.remove(self.queues.buffer, 1)
 				
 				count = count + 1
-				self.values.size = self.values.size - 1
 			end
 			
 		end
@@ -122,7 +119,6 @@ function Queue:operate()
 				table.remove(self.queues.period, 1)
 				
 				count = count + 1
-				self.values.size = self.values.size - 1
 			end
 		end
 		
@@ -141,11 +137,12 @@ function Queue:operate()
 				table.remove(self.queues.maintenance, 1)
 				
 				count = count + 1
-				self.values.size = self.values.size - 1
 			end
 		end
 				
 	end
+
+	if count > 0 then self.values.size = count end
 	
 	return count
 	
@@ -189,9 +186,6 @@ function Queue:push(job, args)
 
 	-- Put the job in its queue
 	table.insert(self.queues[q], {job, unpack(args or {})})
-	
-	-- Increase Queue size
-	self.values.size = self.values.size + 1
 	
 end
 

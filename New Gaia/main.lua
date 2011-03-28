@@ -9,7 +9,7 @@ function love.load()
 	Window:toggle("happy")
 	Window:toggle("fart")
 	Window:toggle("mainMenu")
-	--Window:toggle("debug")
+	Window:toggle("debug")
 	
 	x = 400
 	y = 300
