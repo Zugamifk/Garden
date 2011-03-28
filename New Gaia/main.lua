@@ -29,6 +29,7 @@ function love.draw()
 	
 	love.graphics.setFont(12)
 	
+	love.graphics.setColor(C:colours("b"))
     love.graphics.print(Message, x, y)
 	Draw:cursor()
     
