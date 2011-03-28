@@ -5,8 +5,8 @@ Window.data = {
 	mainMenu = {
 	    tracks = true,
 	    
-	    width = 200,
-	    height = 600,
+	    w = 200,
+	    h = 600,
 	    
 	    x = 0,
 	    y = 0,
@@ -22,10 +22,10 @@ Window.data = {
 	},
 	
 	debug = {
-	    tracks = false,
+	    tracks = true,
 
-		width = 250,
-		height = 400,
+		w = 250,
+		h = 400,
 		
 		x = 550,
 		y = 0,
@@ -35,12 +35,12 @@ Window.data = {
 		Ecolour = C:colours("b"),
 		Tcolour = C:colours("b"),
 		text = {
-			{error.log, 5, 20, 15, 8},
-			{Queue.values.size, 5, 380, 20, 12}
+			{error.log, 5, 20, 15, font.debug},
+			{Queue.values.size, 5, 380, 20, font.tracker}
 		},
 		
 		graphics = {
-		    {"histogram", v = love.timer.getDelta(), hist = {}, x = 10, y = 348, h = 32, w = 150}
+		    --{"histogram", v = love.timer.getDelta(), hist = {}, x = 10, y = 348, h = 32, w = 150}
 		}
 
 	}

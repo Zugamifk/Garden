@@ -8,7 +8,8 @@ C = {
 }
 
 function C:colours(c)
-	
-	return C[c]
+	local colour = C[c]
+
+	return colour
 	
 end

@@ -1,7 +1,7 @@
 button.data = {
 	quitGame = {
 	    title = "Leave",
-	    fSize = 12,
+	    font = font.menuButton,
 	    action = 0990000,
 	    
 		drawType = "colour",

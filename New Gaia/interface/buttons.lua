@@ -20,6 +20,6 @@ function button:draw(b)
 	love.graphics.setColor(unpack(b.Ecolour))
 	love.graphics.rectangle("line", b.x, b.y, b.w, b.h)
 	love.graphics.setColor(unpack(b.Tcolour))
-	love.graphics.setFont(b.fSize)
+	love.graphics.setFont(b.font)
 	love.graphics.print(b.title, b.x + b.tx, b.y + b.ty)
 end

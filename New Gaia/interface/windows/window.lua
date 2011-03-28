@@ -30,9 +30,9 @@ end
 
 
 function Window:draw()
-	for k, v in pairs(self.known.open) do
-    	local w = v.width
-	    local h = v.height
+		for k, v in pairs(self.known.open) do
+    	local w = v.w
+	    local h = v.h
 	    local x = v.x
 	    local y = v.y
 		    
