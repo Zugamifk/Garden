@@ -40,7 +40,7 @@ Window.data = {
 		Ecolour = C:colours("b"),
 		Tcolour = C:colours("b"),
 		text = {
-			{error.log, 5, 20, 15, font.debug},
+			{errors.log, 5, 20, 15, font.debug},
 			{Queue.values.size, 5, 380, 20, font.tracker}
 		},
 

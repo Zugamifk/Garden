@@ -22,7 +22,7 @@ function Console:save(name)
 	file:open('w')
 
 	file:write("---ERROR LOG---\r\n")
-	for line, string in ipairs(error.log) do
+	for line, string in ipairs(errors.log) do
 
 		file:write(string.."\r\n")
 

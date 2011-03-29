@@ -29,7 +29,7 @@ function Window:build(version, a)
 
 		return newWindow
 	else
-	    error:add("windowNotCreated", "windowNotDefined", version)
+	    errors:add("windowNotCreated", "windowNotDefined", version)
 	    return nil
 	end
 end

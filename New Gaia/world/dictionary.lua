@@ -14,18 +14,27 @@ end
 function Dictionary:lookup(word)
 	local list = {}
 
-	if #self.word > 0 then
-		for w in pairs(self.word) do
+	-- Gets all word definitions and puts them in list as keys rather than values, to prevent repeating
+	if #self[word] > 0 then
+		for w in pairs(self[word]) do
 			local l = self:lookup(w)
 			for sw in pairs(l) do
-				table.insert(list, sw)
+				list[sw] = true
 			end
 		end
 	end
 
-	table.insert(list, word)
+	list[word] = true
 
-	return list
+	-- Creates a new table of ordered values with each word in the list
+	local definition = {}
+
+	for v in pairs(list) do
+		table.insert(definition, v)
+		list[v] = false
+	end
+
+	return definition
 end
 
 -- Fetches ALL data from the given word in a new table.

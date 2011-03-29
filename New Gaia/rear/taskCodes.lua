@@ -81,8 +81,6 @@ function Queue:doTask(job)
             love.filesystem.load('interface/buttonData.lua')()
             love.filesystem.load('rear/mouse.lua')()
 
-			love.filesystem.load('rear/dataProcess.lua')()
-
 		-- Load image files
 		elseif jobUnique == 0002 then
 			love.filesystem.load('rear/Images.lua')()
@@ -92,6 +90,7 @@ function Queue:doTask(job)
 			Loader:loadPackage(job[2])
 		-- Last file set to load
 		elseif jobUnique == 0004 then
+			love.filesystem.load('rear/dataProcess.lua')()
 			-- Load test code for debugging
 			love.filesystem.load('test_methods.lua')()
 
