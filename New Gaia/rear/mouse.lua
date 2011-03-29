@@ -50,8 +50,6 @@ function Mouse:getContext()
 		self.context = "void"
 	end
 
-	Message = "y="..self.x.." x="..self.y.." context: "..self.context..": "..self.contextName
-
 end
 
 function Mouse:getBounds(c, w)
@@ -82,6 +80,8 @@ function Mouse:click()
 
 	if self.context == "button" then
 		Queue:push(button.data[self.contextName].action)
+
+		Console:add("buttonPushed", {self.contextName, button.data[self.contextName].action})
 	end
 
 end

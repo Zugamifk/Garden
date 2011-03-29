@@ -12,6 +12,8 @@ Queue = {
 		period = {}, -- Code 3
 		-- Holds all of the maintenance tasks such as updating variables and errorchecking
 		maintenance = {}, -- Code 4
+		-- Holds all images to draw, build in layers at a time
+		draw = {}, -- Code 5
 
 		-- These numbers added together equals the number of tasks to be performed
 		-- before priority tasks are performed
@@ -21,6 +23,7 @@ Queue = {
 		period = 1, -- Period frequency
 		maintenance = 1 -- Maintenance frequency
 		}
+
 	},
 
 	-- Hold any important values for the table
@@ -46,99 +49,107 @@ Queue = {
 
 
 -- When this is called, the queue is emptied
-function Queue:operate()
+function Queue:operate(d)
 	local count
 	local limit = self.values.taskLimit
 	count = 0
 
-	-- runs as long as there are tasks in the queue
-	while self:hasTasks() do
-
-		-- Check teh priority queue first each time
-	    while self.queues.priority[1] do
-
-	    	if count >= limit then
-	    		return count
-	    	end
-
-	    	-- do an action based on its code
-			self:doTask(self:pop("priority"))
-			-- Remove it from the queue
-			table.remove(self.queues.priority, 1)
-
-			count = count + 10
-
+	if d then
+		while self.queues.draw[1] do
+			self:doTask(self:pop("draw"))
+			table.remove(self.queues.draw, q)
 		end
 
-		-- Run basic tasks
-	   	for i = 1, self.queues.frequencies.tasks do
+	else
+		-- runs as long as there are tasks in the queue
+		while self:hasTasks() do
 
-	    	if count >= limit then
-	    		return count
-	    	elseif self.queues.tasks[1] then
+			-- Check teh priority queue first each time
+			while self.queues.priority[1] do
 
-		    	-- do an action based on its code
-				self:doTask(self:pop("tasks"))
+				if count >= limit then
+					return count
+				end
+
+				-- do an action based on its code
+				self:doTask(self:pop("priority"))
 				-- Remove it from the queue
-				table.remove(self.queues.tasks, 1)
+				table.remove(self.queues.priority, 1)
 
-				count = count + 1
-
+				count = count + 10
 
 			end
 
-		end
+			-- Run basic tasks
+			for i = 1, self.queues.frequencies.tasks do
 
-		-- Run buffer tasks
-	   	for i = 1, self.queues.frequencies.buffer do
+				if count >= limit then
+					return count
+				elseif self.queues.tasks[1] then
 
-	    	if count >= limit then
-	    		return count
-	    	elseif self.queues.buffer[1] then
+					-- do an action based on its code
+					self:doTask(self:pop("tasks"))
+					-- Remove it from the queue
+					table.remove(self.queues.tasks, 1)
 
-		    	-- do an action based on its code
-				self:doTask(self:pop("buffer"))
-				-- Remove it from the queue
-				table.remove(self.queues.buffer, 1)
+					count = count + 1
 
-				count = count + 1
+
+				end
+
+			end
+
+			-- Run buffer tasks
+			for i = 1, self.queues.frequencies.buffer do
+
+				if count >= limit then
+					return count
+				elseif self.queues.buffer[1] then
+
+					-- do an action based on its code
+					self:doTask(self:pop("buffer"))
+					-- Remove it from the queue
+					table.remove(self.queues.buffer, 1)
+
+					count = count + 1
+				end
+
+			end
+
+			-- Run period tasks
+			for i = 1, self.queues.frequencies.period do
+
+				if count >= limit then
+					return count
+				elseif self.queues.period[1] then
+					-- do an action based on its code
+					self:doTask(self:pop("period"))
+					-- Remove it from the queue
+					table.remove(self.queues.period, 1)
+
+					count = count + 1
+				end
+			end
+
+			-- Run maintenance tasks
+			for i = 1, self.queues.frequencies.maintenance do
+
+				if count >= limit then
+					return count
+				elseif self.queues.maintenance[1] then
+					local job = self:pop("maintenance")
+					-- do an action based on its code
+					self:doTask(job)
+					-- Add it to the back and remove it from the front
+					table.insert(self.queues.maintenance, job)
+					-- Remove it from the queue
+					table.remove(self.queues.maintenance, 1)
+
+					count = count + 1
+				end
 			end
 
 		end
-
-		-- Run period tasks
-	   	for i = 1, self.queues.frequencies.period do
-
-	    	if count >= limit then
-	    		return count
-	    	elseif self.queues.period[1] then
-		    	-- do an action based on its code
-				self:doTask(self:pop("period"))
-				-- Remove it from the queue
-				table.remove(self.queues.period, 1)
-
-				count = count + 1
-			end
-		end
-
-		-- Run maintenance tasks
-	   	for i = 1, self.queues.frequencies.maintenance do
-
-	    	if count >= limit then
-	    		return count
-	    	elseif self.queues.maintenance[1] then
-				local job = self:pop("maintenance")
-		    	-- do an action based on its code
-				self:doTask(job)
-				-- Add it to the back and remove it from the front
-				table.insert(self.queues.maintenance, job)
-				-- Remove it from the queue
-				table.remove(self.queues.maintenance, 1)
-
-				count = count + 1
-			end
-		end
-
 	end
 
 	if count > 0 then self.values.size = count end
@@ -181,6 +192,8 @@ function Queue:push(job, args)
 		q = "maintenance"
 	elseif jobCode == 0 then
 		q = "priority"
+	elseif jobCode == 5 then
+		q = "draw"
 	end
 
 	-- Put the job in its queue

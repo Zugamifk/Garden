@@ -12,5 +12,5 @@ function error:add(e, r, a)
 end
 
 function error:getMessage(e, r, a)
-	return "ERROR: "..e..":\n\t"..r..":  "..self[e][r][1]..a..self[e][r][2]
+	return "ERROR: "..e..": "..r..":\r\n\t"..self[e][r][1]..a..self[e][r][2]
 end

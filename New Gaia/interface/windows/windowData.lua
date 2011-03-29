@@ -19,6 +19,7 @@ Window.data = {
 		Tcolour = C:colours("gray"),
 
 		buttons = {
+			{name = "startGame", x = 32, y = 462, w = 100, h = 40, tx = 30, ty = 12},
 			{name = "quitGame", x = 32, y = 512, w = 100, h = 40, tx = 30, ty = 12}
 		}
 	},

@@ -3,7 +3,16 @@ love.filesystem.load('rear/taskCodes.lua')()
 
 love.filesystem.load('rear/errors.lua')()
 love.filesystem.load('rear/console.lua')()
-		    
-Queue:push(0000000)
 
-Queue:operate()
+Loader = {}
+
+function Loader:loadPackage(package)
+	if package == "main" then
+		love.filesystem.load('world/dictionary.lua')()
+		love.filesystem.load('world/dictionaryData.lua')()
+		love.filesystem.load('world/object.lua')()
+		love.filesystem.load('world/tile.lua')()
+		love.filesystem.load('world/map.lua')()
+
+	end
+end

@@ -1,13 +1,10 @@
 function love.load()
+
 	love.filesystem.load('loader.lua')()
 
-	Message = "Hello World"
-   	x = 400
-	y = 300
+	Queue:push(0000000)
 
-	Window:toggle("happy")
-	Window:toggle("fart")
-	Window:toggle("mainMenu")
+	Queue:operate()
 
 end
 
@@ -16,21 +13,28 @@ function love.update()
 
 	dt = love.timer.getDelta()
 
+	Queue:operate()
+
 end
 
 
 function love.draw()
 
-    Queue:push(1100001):operate()
+	Queue:operate(1)
 
 	love.graphics.setFont(font.tracker)
 
 	love.graphics.setColor(C:colours("b"))
-    love.graphics.print(Message, x, y)
+    love.graphics.print(debugMessage(), x, y)
 	Draw:cursor()
 
 	Mouse:getContext()
 
+end
+
+function debugMessage()
+	local s = "y="..Mouse.x.." x="..Mouse.y.." context: "..Mouse.context..": "..Mouse.contextName
+	return s
 end
 
 function love.keypressed(key)

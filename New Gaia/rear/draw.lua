@@ -9,7 +9,11 @@ Draw = {
 }
 
 function Draw:dump()
-	
+-- Draw Windows
+	Queue:push(5100001)
+-- Draw Cursor
+-- Misc
+	Queue:push(5100000)
 
 end
 

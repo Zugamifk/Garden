@@ -17,10 +17,13 @@
 	[0]000000	Load test file and queue other loading tasks
 	[0]000001	Load main game files
 	[0]000002	Load image files
+	[0]000004	Load last set of files
 	[0]000005	Set default game variables
 	[0]000020	Queue maintenance tasks
 	01		File manipulation
 	[0]010000	Save log of console
+	02		Loading and switching between code packages
+	[0]020000	Process main game data
 	10		Drawing
 	[]100000	Draw Message
 	[]100001	Draw Windows
@@ -33,6 +36,7 @@
 	[1]980001	Changes Message
 	99		Core system job
 	[0]990000	Quits the game
+	[4]990010	Queues draw tasks
 
 --]]
 
@@ -50,17 +54,20 @@ function Queue:doTask(job)
 
 		-- Startup procedure
 		if jobUnique == 0000 then
-			-- Load pre-game file testing code
-			love.filesystem.load('test_methods.lua')()
 
 			-- Load main game files
 			self:push(0000001)
 			self:push(0000002)
+			self:push(0000003, {"main"})
+
+			-- Last file set to load
+			self:push(0000004)
 
 			self:push(0000005)
 
 			-- Begin maintenance functions
 			self:push(0000020)
+
 		-- Load main game files
 		elseif jobUnique == 0001 then
 		    love.filesystem.load('rear/OOP.lua')()
@@ -74,9 +81,19 @@ function Queue:doTask(job)
             love.filesystem.load('interface/buttonData.lua')()
             love.filesystem.load('rear/mouse.lua')()
 
+			love.filesystem.load('rear/dataProcess.lua')()
+
 		-- Load image files
 		elseif jobUnique == 0002 then
 			love.filesystem.load('rear/Images.lua')()
+
+		-- Load Map
+		elseif jobUnique == 0003 then
+			Loader:loadPackage(job[2])
+		-- Last file set to load
+		elseif jobUnique == 0004 then
+			-- Load test code for debugging
+			love.filesystem.load('test_methods.lua')()
 
 		-- Set game values for start
 		elseif jobUnique == 0005 then
@@ -90,6 +107,7 @@ function Queue:doTask(job)
 		-- Begin maintenance procedures
 		elseif jobUnique == 0020 then
 			self:push(4200000)
+			self:push(4990010)
 		end
 
 	-- Loading and saving games
@@ -97,6 +115,15 @@ function Queue:doTask(job)
     	if jobUnique == 0000 then
     		Console:save("log1")
     	end
+
+	-- Loading and switching packages
+	elseif jobSet == 02 then
+
+		-- Begin processing main game data
+		if jobUnique == 0000 then
+			dataProcess:loadGame("game")
+		end
+
 	-- Drawing
 	elseif jobSet == 10 then
 		if jobUnique == 0000 then
@@ -110,6 +137,8 @@ function Queue:doTask(job)
 	elseif jobSet == 20 then
 		if jobUnique == 0000 then
 		    Mouse:getContext()
+		elseif jobunique == 0001 then
+
 		end
     	-- Interacting with the game
 	elseif jobSet == 21 then
@@ -147,6 +176,8 @@ function Queue:doTask(job)
 		if jobUnique == 0000 then
 			Console:save("log1")
 		   	love.event.push('q')
+		elseif jobUnique == 0010 then
+			Draw:dump()
 		end
 	end
 
