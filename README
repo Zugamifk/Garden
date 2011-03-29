@@ -2,9 +2,9 @@ To run, drag the New Gaia folder onto love.exe
 Not much to see yet, but hopefully it'll get interesting soon.
 
 To do:
-Interface
+Creating objects in compressed and expanded tables
+Drawing the map
+Getting mouse context in game
+Collisions
 Running/switching code packages
 Drawing
-Input
-Console
-Debug info
