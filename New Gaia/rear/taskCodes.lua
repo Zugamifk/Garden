@@ -1,4 +1,4 @@
---[[ 
+--[[
 	Code format:
 	1-23-4567
 	1) priority
@@ -12,6 +12,30 @@
     4567) job uniquecode
 --]]
 
+--[[ INDEX [usual priority]XXXXXX
+	00		Load procedures
+	[0]000000	Load test file and queue other loading tasks
+	[0]000001	Load main game files
+	[0]000002	Load image files
+	[0]000005	Set default game variables
+	[0]000020	Queue maintenance tasks
+	01		File manipulation
+	[0]010000	Save log of console
+	10		Drawing
+	[]100000	Draw Message
+	[]100001	Draw Windows
+	20		Updating game variables
+	[4]200000	Get mouse context
+	21		Interacting with the game
+	[1]210000	Toggling windows
+	98		Test stuff
+	[1]980000	Changes Message
+	[1]980001	Changes Message
+	99		Core system job
+	[0]990000	Quits the game
+
+--]]
+
 function Queue:doTask(job)
 
 	-- Variables to hold the job codes and its parts
@@ -19,8 +43,8 @@ function Queue:doTask(job)
 	local jobSet = self:getCodeChunk(job[1], "jobSet")
 	local jobUnique = self:getCodeChunk(job[1], "jobUnique")
 	local jobPriority = self:getCodeChunk(job[1], "jobUnique")
-	 
-	
+
+
 	-- Loading core game files
 	if jobSet == 00 then
 
@@ -29,7 +53,6 @@ function Queue:doTask(job)
 			-- Load pre-game file testing code
 			love.filesystem.load('test_methods.lua')()
 
-			Mesage = HA
 			-- Load main game files
 			self:push(0000001)
 			self:push(0000002)
@@ -40,7 +63,6 @@ function Queue:doTask(job)
 			self:push(0000020)
 		-- Load main game files
 		elseif jobUnique == 0001 then
-		    love.filesystem.load('rear/errors.lua')()
 		    love.filesystem.load('rear/OOP.lua')()
 		    love.filesystem.load('interface/canvas.lua')()
 			love.filesystem.load('rear/draw.lua')()
@@ -67,12 +89,14 @@ function Queue:doTask(job)
 
 		-- Begin maintenance procedures
 		elseif jobUnique == 0020 then
-			--self:push(4200000)
+			self:push(4200000)
 		end
 
 	-- Loading and saving games
 	elseif jobSet == 01 then
-
+    	if jobUnique == 0000 then
+    		Console:save("log1")
+    	end
 	-- Drawing
 	elseif jobSet == 10 then
 		if jobUnique == 0000 then
@@ -92,34 +116,41 @@ function Queue:doTask(job)
 
 		-- For toggling windows
 	    if jobUnique == 0000 then
+	    	-- job is constructed as job = {jobCode, args}
+	    	--		In this case, the second argument is the window version and
+	    	--		extra arguments are from the third on.
 	        local version = oo:new(job[2])
 	        table.remove(job, 1)
             table.remove(job, 1)
 			Window:toggle(version, job)
-			
-	    elseif jobUnique == 0001 then
 
-	    end
-	    
-	
+	    elseif jobUnique == 0001 then
+			Mouse:click()
+		end
+
+
 	elseif jobSet == 98 then
 
 		if jobUnique == 0000 then
-		
+
 			Message = "BOO BOO BOO"
-			
+
 		elseif jobUnique == 0001 then
-		
+
 			Message = "HA HA HA"
 
 		end
-	
-	
+
+
 	elseif jobSet == 99 then
 		-- Quits the game
 		if jobUnique == 0000 then
+			Console:save("log1")
 		   	love.event.push('q')
 		end
 	end
-	
+
+	-- For method chaining
+	return self
+
 end

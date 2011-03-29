@@ -19,8 +19,14 @@ function Window:build(version, a)
 		    end
 		end
 
-		setmetatable(newWindow, {__index = self.data[version] or a})
-        
+		for i, v in pairs(a or {}) do
+			if type(v) == "table" then setmetatable(v, {__index = self.data[version][i]})
+				newWindow[i] = v
+			end
+		end
+
+		setmetatable(newWindow, {__index = self.data[version]})
+
 		return newWindow
 	else
 	    error:add("windowNotCreated", "windowNotDefined", version)
@@ -35,22 +41,22 @@ function Window:draw()
 	    local h = v.h
 	    local x = v.x
 	    local y = v.y
-		    
+
 	    if v.drawType == "colour" then
-		    
+
 	        love.graphics.setColor(unpack(v.BGcolour))
 	        love.graphics.rectangle("fill", x, y, w, h)
 	        love.graphics.setColor(unpack(v.Ecolour))
 	        love.graphics.rectangle("line", x, y, w, h)
-	        
+
 	    end
-	    
+
 	    if v.buttons then
         	for i, b in ipairs(v.buttons) do
         	    button:draw(b)
         	end
 	    end
-	    
+
 	    if v.text then
 
 	        for line, string in ipairs(v.text) do
@@ -64,18 +70,18 @@ function Window:draw()
 				    end
 				end
 	    	end
-	    
+
 	    end
-	    
+
 	    if v.graphics then
 	        for i, g in ipairs(v.graphics) do
 	            if g[1] == "histogram" then
 					local line = {}
-					
+
 					if #g.hist > g.w then
 					    table.remove(g.hist)
 					end
-					
+
 					for t, h in ipairs(g.hist) do
 						line[t*2-1] = v.x + g.x + t
 						line[t*2] = v.y + g.y - h
@@ -87,7 +93,7 @@ function Window:draw()
 	            end
 	        end
 	    end
-	    
+
 	end
 end
 
@@ -104,4 +110,3 @@ function Window:toggle(version, a)
 end
 
 
-	
