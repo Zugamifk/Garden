@@ -1,24 +1,16 @@
 button.data = {
-	quitGame = {
-	    title = "Leave",
+	mainMenu = {
 	    font = font.menuButton,
-	    action = 0990000,
 
 		drawType = "colour",
 		BGcolour = C:colours("w"),
 		Ecolour = C:colours("b"),
-		Tcolour = C:colours("b")
-	},
-
-	startGame = {
-	    title = "Begin",
-	    font = font.menuButton,
-	    action = 0020000,
-
-		drawType = "colour",
-		BGcolour = C:colours("w"),
-		Ecolour = C:colours("b"),
-		Tcolour = C:colours("b")
+		Tcolour = C:colours("b"),
+		x = 32,
+		w = 100,
+		h = 40,
+		tx = 30,
+		ty = 10
 	}
 
 }

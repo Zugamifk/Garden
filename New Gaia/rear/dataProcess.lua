@@ -3,6 +3,11 @@ dataProcess = {
 }
 
 function dataProcess:loadGame(task, files)
+
+	-- empty queue and refresh queue
+	Queue:empty()
+	interface:empty()
+
 	if task == "game" then
 		local M = Map:new()
 
@@ -37,5 +42,10 @@ function dataProcess:loadGame(task, files)
 				end
 			end
 		end
+
+	-- Map draw testor
+	elseif task == "mapDraw" then
+		require('modules/isoTest/engine.lua')
+
 	end
 end

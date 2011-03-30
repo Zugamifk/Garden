@@ -1,0 +1,10 @@
+-- Convert screen coordinates to grid coordinates
+function isoscreen(x, y, z)
+   local a = 7/15
+   return math.floor((y-x*a)/14)+z, math.floor((y+x*a)/14)+z
+end
+
+-- Convert grid coordinates to screen coordinates
+function isogrid(z, x, y)
+   return math.round(-x*15 + y*15), math.round(y*7 + x*7 - z*14)
+end

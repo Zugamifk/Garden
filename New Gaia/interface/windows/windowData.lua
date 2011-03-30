@@ -2,6 +2,27 @@ local C = C
 
 Window.data = {
 
+	Log = {
+		name = "Log",
+
+		tracks = false,
+
+		w = 250,
+		h = 600,
+
+		x = 550,
+		y = 0,
+
+	    drawType = "colour",
+		BGcolour = C:colours("lgray"),
+		Ecolour = C:colours("b"),
+		Tcolour = C:colours("b"),
+
+		text = {
+			{Console.log, 5, 12, 15, font.debug, 590}
+		}
+	},
+
 	mainMenu = {
 		name = "Main Menu",
 
@@ -19,8 +40,9 @@ Window.data = {
 		Tcolour = C:colours("gray"),
 
 		buttons = {
-			{name = "startGame", x = 32, y = 462, w = 100, h = 40, tx = 30, ty = 12},
-			{name = "quitGame", x = 32, y = 512, w = 100, h = 40, tx = 30, ty = 12}
+			{name = "mainMenu", title = "Main", y = 400, job = 0020000},
+			{name = "mainMenu", title = "Map Draw", tx = 12, y = 450, job = 0020001},
+			{name = "mainMenu", title = "Quit", y = 500, job = 0990000}
 		}
 	},
 
@@ -40,13 +62,13 @@ Window.data = {
 		Ecolour = C:colours("b"),
 		Tcolour = C:colours("b"),
 		text = {
-			{errors.log, 5, 20, 15, font.debug},
+			{errors.log, 5, 20, 15, font.debug, 300},
 			{Queue.values.size, 5, 380, 20, font.tracker}
-		},
-
-		graphics = {
-		    --{"histogram", v = love.timer.getDelta(), hist = {}, x = 10, y = 348, h = 32, w = 150}
 		}
+
+		--graphics = {
+		    --{"histogram", v = love.timer.getDelta(), hist = {}, x = 10, y = 348, h = 32, w = 150}
+		--}
 
 	}
 }

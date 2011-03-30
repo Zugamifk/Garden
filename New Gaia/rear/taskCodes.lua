@@ -70,29 +70,15 @@ function Queue:doTask(job)
 
 		-- Load main game files
 		elseif jobUnique == 0001 then
-		    love.filesystem.load('rear/OOP.lua')()
-		    love.filesystem.load('interface/canvas.lua')()
-			love.filesystem.load('rear/draw.lua')()
-			love.filesystem.load('interface/font.lua')()
-			love.filesystem.load('interface/interface.lua')()
-		    love.filesystem.load('interface/windows/window.lua')()
-		    love.filesystem.load('interface/windows/windowData.lua')()
-		    love.filesystem.load('interface/buttons.lua')()
-            love.filesystem.load('interface/buttonData.lua')()
-            love.filesystem.load('rear/mouse.lua')()
 
 		-- Load image files
 		elseif jobUnique == 0002 then
-			love.filesystem.load('rear/Images.lua')()
 
 		-- Load Map
 		elseif jobUnique == 0003 then
 			Loader:loadPackage(job[2])
 		-- Last file set to load
 		elseif jobUnique == 0004 then
-			love.filesystem.load('rear/dataProcess.lua')()
-			-- Load test code for debugging
-			love.filesystem.load('test_methods.lua')()
 
 		-- Set game values for start
 		elseif jobUnique == 0005 then
@@ -121,12 +107,16 @@ function Queue:doTask(job)
 		-- Begin processing main game data
 		if jobUnique == 0000 then
 			dataProcess:loadGame("game")
+
+		-- Begin mapdraw test
+		elseif jobUnique == 0001 then
+			dataProcess:loadGame("mapDraw")
 		end
 
 	-- Drawing
 	elseif jobSet == 10 then
 		if jobUnique == 0000 then
-			love.graphics.print(Message, 100, 100)
+			love.graphics.print(Message or "", 100, 100)
 
 		--[[ DRAWING THE HUD AND MENUS --]]
 		elseif jobUnique == 0001 then
@@ -177,6 +167,10 @@ function Queue:doTask(job)
 		   	love.event.push('q')
 		elseif jobUnique == 0010 then
 			Draw:dump()
+		-- Closes all windows and empties the queue
+		elseif jobUnique == 0020 then
+			Queue:empty()
+			interface:empty()
 		end
 	end
 

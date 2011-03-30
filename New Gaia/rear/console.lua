@@ -62,7 +62,7 @@ function Console:add(template, data)
 			message = "Key pushed: "..data
 		end
 
-		table.insert(self.log, message.. "  ")
+		table.insert(self.log, message)
 
 	end
 

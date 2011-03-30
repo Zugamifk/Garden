@@ -57,7 +57,7 @@ function Queue:operate(d)
 	if d then
 		while self.queues.draw[1] do
 			self:doTask(self:pop("draw"))
-			table.remove(self.queues.draw, q)
+			table.remove(self.queues.draw, 1)
 		end
 
 	else
@@ -215,6 +215,18 @@ function Queue:pop(queue)
 	Console:add("pop", job[1])
 	return job
 
+end
+
+-- Voids the queue
+function Queue:empty(queue)
+	local emptyQueue = function() return {} end
+	if queue then
+		self.queues[queue] = emptyQueue()
+	else
+		for q in pairs(self.queues) do
+			q = emptyQueue()
+		end
+	end
 end
 
 -- Gets a chunk from the queue

@@ -3,6 +3,7 @@ Mouse = {
 	x = love.mouse.getX(),
 	y = love.mouse.getY(),
 
+	contextTable = {},
 	context = "void",
 	contextName = "nuffin",
 
@@ -27,6 +28,7 @@ function Mouse:getContext()
 	    and self.y < b[4]
 	    then
 	        inWindow = b[5]
+			contextTable = b
 	    end
 	end
 
@@ -44,6 +46,7 @@ function Mouse:getContext()
 			then
 				self.context = "button"
 				self.contextName = b[6]
+				contextTable = b
 			end
 		end
 	else
@@ -64,11 +67,13 @@ function Mouse:getBounds(c, w)
 			end
 
 		end
+
 	-- Getin button boundaries
 	elseif c == 2 then
 		if w.buttons then
 			for i, b in ipairs(w.buttons) do
-				table.insert(newBounds, {b.x, b.y, b.x + b.w, b.y + b.h, b.action, b.name})
+				local b = setmetatable(b, {__index = button.data[b.name]})
+				table.insert(newBounds, {b.x, b.y, b.x + b.w, b.y + b.h, b.job, b.name})
 			end
 		end
 	end
@@ -79,9 +84,9 @@ end
 function Mouse:click()
 
 	if self.context == "button" then
-		Queue:push(button.data[self.contextName].action)
+		Queue:push(contextTable[5])
 
-		Console:add("buttonPushed", {self.contextName, button.data[self.contextName].action})
+		Console:add("buttonPushed", {self.contextName, contextTable[5]})
 	end
 
 end

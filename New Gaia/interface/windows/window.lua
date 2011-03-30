@@ -1,5 +1,3 @@
-local interface = interface
-local oo = oo
 Window = interface:newPrototype(interface)
 
 Window.known = {
@@ -41,12 +39,14 @@ function Window:draw()
 	    local h = v.h
 	    local x = v.x
 	    local y = v.y
+		local bg = v.BGcolour
+		local e = v.Ecolour
 
 	    if v.drawType == "colour" then
 
-	        love.graphics.setColor(unpack(v.BGcolour))
+	        love.graphics.setColor(bg[1], bg[2], bg[3], bg[4])
 	        love.graphics.rectangle("fill", x, y, w, h)
-	        love.graphics.setColor(unpack(v.Ecolour))
+	        love.graphics.setColor(e[1], e[2], e[3], e[4])
 	        love.graphics.rectangle("line", x, y, w, h)
 
 	    end
@@ -64,6 +64,8 @@ function Window:draw()
 	                love.graphics.setFont(string[5])
 					love.graphics.printf(string[1], x + string[2], y + string[3], w - string[4])
 				else
+					local cl = #string[1]
+					if cl * string[3] > string[6] then table.remove(string[1], 1) end
 				    for l, s in ipairs(string[1]) do
 				        love.graphics.setFont(string[5])
 						love.graphics.printf(s, x + string[2], y + (l-1)*string[3] + string[4] - 10, w)
