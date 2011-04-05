@@ -89,7 +89,7 @@ function Window:draw()
 						line[t*2] = v.y + g.y - h
 	                end
 	                if line[1] then
-	                	love.graphics.line(v.x+g.x,v.y+g.y, unpack(line))
+							love.graphics.line(line[p], unpack(line))
 					end
 					table.insert(g.hist, g.v%g.h)
 	            end
