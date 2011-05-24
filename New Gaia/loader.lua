@@ -19,6 +19,8 @@ require('rear/Images.lua')
 
 require('rear/dataProcess.lua')
 
+require('world/actor.lua')
+
 -- Load test code for debugging
 require('test_methods.lua')
 
@@ -26,8 +28,7 @@ Loader = {}
 
 function Loader:loadPackage(package)
 	if package == "main" then
-		love.filesystem.load('world/dictionary.lua')()
-		love.filesystem.load('world/dictionaryData.lua')()
+		love.filesystem.load('language/grammar.lua')()
 		love.filesystem.load('world/object.lua')()
 		love.filesystem.load('world/tile.lua')()
 		love.filesystem.load('world/map.lua')()

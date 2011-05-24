@@ -4,3 +4,5 @@
 	Window:toggle("happy")
 	Window:toggle("fart")
 	Window:toggle("mainMenu")
+
+	God = Actor:new("JESUS")

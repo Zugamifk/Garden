@@ -26,6 +26,7 @@ function love.draw()
 
 	love.graphics.setColor(C:colours("b"))
     love.graphics.print(debugMessage(), x, y)
+	love.graphics.print(God.type, x, y-20)
 	Draw:cursor()
 
 	Mouse:getContext()

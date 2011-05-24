@@ -1,0 +1,1 @@
+Actor.data.type = "God"
